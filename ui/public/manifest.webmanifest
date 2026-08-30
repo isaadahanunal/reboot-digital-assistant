@@ -1,0 +1,14 @@
+{
+  "name": "Reboot — Digital Well-Being Coach",
+  "short_name": "Reboot",
+  "description": "A local-first coach that reads your real device usage and builds realistic screen-time plans.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f5f7",
+  "theme_color": "#4a3aa7",
+  "icons": [
+    { "src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

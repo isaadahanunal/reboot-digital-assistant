@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Optional macOS LaunchAgent: starts Reboot at login and restarts it if it dies,
+  so measurement does not depend on you keeping a terminal window open.
+
+  Install (edit the two paths first):
+      cp deploy/com.reboot.coach.plist ~/Library/LaunchAgents/
+      launchctl load ~/Library/LaunchAgents/com.reboot.coach.plist
+
+  Remove:
+      launchctl unload ~/Library/LaunchAgents/com.reboot.coach.plist
+      rm ~/Library/LaunchAgents/com.reboot.coach.plist
+
+  macOS will ask once for Automation permission so the collector can read which
+  app is frontmost. Reboot cannot name your foreground app until you allow it.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.reboot.coach</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-lc</string>
+    <string>cd "/ABSOLUTE/PATH/TO/reboot" &amp;&amp; ./run.sh</string>
+  </array>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/reboot.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/reboot.err</string>
+</dict>
+</plist>
