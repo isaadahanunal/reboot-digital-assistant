@@ -49,6 +49,9 @@ export default function App() {
   const [plan, setPlan] = useState(null);
   const [checkins, setCheckins] = useState([]);
   const [preview, setPreview] = useState(null);
+  // Setup runs on every start, not just the first: this is session state, not the
+  // persisted profile.onboarded flag, so a reload always walks the steps again.
+  const [setupDone, setSetupDone] = useState(false);
   const [bootError, setBootError] = useState(null);
 
   const loadDay = useCallback(async (key) => {
@@ -142,14 +145,14 @@ export default function App() {
     return <main style={{ padding: 'var(--s-6)' }}><p className="hint">Starting Reboot…</p></main>;
   }
 
-  if (!profile.onboarded) {
+  if (!setupDone) {
     return (
       <Onboarding
         profile={profile}
         saveProfile={saveProfile}
         startCollector={async () => { await api('/api/collector/start', { method: 'POST', body: {} }); await refreshCollector(); }}
         collector={collector}
-        finish={() => boot()}
+        finish={() => { setSetupDone(true); boot(); }}
       />
     );
   }
@@ -158,8 +161,7 @@ export default function App() {
     <>
       <a className="skip" href="#main-content">Skip to content</a>
       <div className="app">
-        <Sidebar route={route} status={status} theme={theme} setTheme={setTheme}
-                 collector={collector} />
+        <Sidebar route={route} theme={theme} setTheme={setTheme} />
         <main id="main-content">
           <div className="topbar-mobile">
             <span className="mark" aria-hidden="true"

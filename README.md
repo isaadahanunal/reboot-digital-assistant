@@ -22,7 +22,6 @@ device agent ──▶ local SQLite ──▶ deterministic aggregation ──�
 ## Run it in three commands
 
 ```bash
-cd reboot
 cd ui && npm install && npm run build && cd ..    # build the React UI (first time only)
 ./run.sh                                          # http://127.0.0.1:8765
 ```

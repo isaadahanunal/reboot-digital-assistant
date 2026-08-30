@@ -23,13 +23,7 @@ function ThemeControl({ theme, setTheme }) {
   );
 }
 
-export default function Sidebar({ route, status, theme, setTheme, collector }) {
-  const sessions = status?.data?.sessions ?? 0;
-  const provider = status?.provider;
-  const engineLive = provider && (
-    (provider.selected === 'gemini' && provider.gemini_key_set) ||
-    (provider.selected === 'anthropic' && provider.anthropic_key_set));
-
+export default function Sidebar({ route, theme, setTheme }) {
   return (
     <nav className="sidebar" aria-label="Main navigation">
       <div className="brand">
@@ -54,18 +48,6 @@ export default function Sidebar({ route, status, theme, setTheme, collector }) {
       </div>
 
       <div className="side-foot">
-        <div className={`status-line ${sessions ? 'ok' : 'idle'}`}>
-          <span className="dot" aria-hidden="true" />
-          <span>{sessions ? `${sessions} sessions · ${status.data.days}d` : 'No device data'}</span>
-        </div>
-        <div className={`status-line ${engineLive ? 'ok' : 'idle'}`}>
-          <span className="dot" aria-hidden="true" />
-          <span>
-            {provider?.selected === 'offline'
-              ? 'Offline · rule-based'
-              : `${provider?.selected ?? 'engine'}${engineLive ? ' · ready' : ' · no key'}`}
-          </span>
-        </div>
         <ThemeControl theme={theme} setTheme={setTheme} />
       </div>
     </nav>
